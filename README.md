@@ -111,8 +111,10 @@ After restart into awesome and you can't see the NetworkManager icon on your sys
 If you want to change the `nm-applet` icon to match KDEsome, run in Slackware (adapt for another distro):
 
 ```console
-# cp ~/.config/awesome/themes/kdesome/trayicons/nm-applet/*.png \
+# cp ~/.config/awesome/themes/kdesome/trayicons/nm-applet/16x16/*.png \
 /usr/share/icons/hicolor/16x16/apps/
+# cp ~/.config/awesome/themes/kdesome/trayicons/nm-applet/22x22/*.png \
+/usr/share/icons/hicolor/22x22/apps/
 # rm -f /usr/share/icons/icon-theme.cache && \
 /usr/bin/gtk-update-icon-cache -t -f /usr/share/icons/
 ```

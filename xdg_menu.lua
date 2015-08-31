@@ -8,6 +8,7 @@
      {"Akonaditray", "akonaditray", "/usr/share/icons/hicolor/22x22/apps/akonaditray.png" },
      {"Ark", "ark -caption Ark ", "/usr/share/icons/hicolor/16x16/apps/ark.png" },
      {"Assistente de importação do KMail", "importwizard", "/usr/share/icons/hicolor/64x64/apps/kontact-import-wizard.png" },
+     {"Atom", "/usr/bin/atom ", "/usr/share/pixmaps/atom.png" },
      {"Filelight", "filelight ", "/usr/share/icons/hicolor/16x16/apps/filelight.png" },
      {"HP Device Manager", "hp-toolbox", "///usr/share/hplip/data/images/128x128/hp_logo.png" },
      {"KAlarm", "kalarm -caption KAlarm ", "/usr/share/icons/hicolor/16x16/apps/kalarm.png" },
@@ -272,6 +273,7 @@
 
  local menud35651cdbe370767cefd2e5d398a1dd5 = {
      {"Anjuta", "anjuta ", "/usr/share/icons/hicolor/16x16/apps/anjuta.png" },
+     {"Atom", "/usr/bin/atom ", "/usr/share/pixmaps/atom.png" },
      {"CMake", "cmake-gui ", "/usr/share/pixmaps/CMakeSetup32.png" },
      {"Cervisia", "cervisia -caption Cervisia  ", "/usr/share/icons/hicolor/16x16/apps/cervisia.png" },
      {"Console do Akonadi", "akonadiconsole", "/usr/share/icons/hicolor/16x16/apps/akonadiconsole.png" },
