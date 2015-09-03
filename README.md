@@ -111,12 +111,12 @@ After restart into awesome and you can't see the NetworkManager icon on your sys
 If you want to change the `nm-applet` icon to match KDEsome, run in Slackware (adapt for another distro):
 
 ```console
-# cp ~/.config/awesome/themes/kdesome/trayicons/nm-applet/16x16/*.png \
-/usr/share/icons/hicolor/16x16/apps/
 # cp ~/.config/awesome/themes/kdesome/trayicons/nm-applet/22x22/*.png \
 /usr/share/icons/hicolor/22x22/apps/
 # rm -f /usr/share/icons/icon-theme.cache && \
 /usr/bin/gtk-update-icon-cache -t -f /usr/share/icons/
+# pkill nm-applet
+$ nm-applet &
 ```
 
 In the rare case where someone uses Synology CloudStation client, there are also systray icons for it too. To install them in Slackware:
@@ -174,11 +174,13 @@ It's just fair you ask, indeed. There are three main reasons I did KDEsome rathe
 
 I would like to thanks these folks:
 
-- Jerónimo Navavo, which after his [post](https://plus.google.com/113723455617885553999/posts/CXNR7dEjVbU) about awesome and Slackware community at Google+ gave me the sparks to try something different.
+- Jerónimo Navavo, which after his [post](https://plus.google.com/113723455617885553999/posts/CXNR7dEjVbU) about awesome in the Slackware community at Google+ gave me the sparks to try something different.
 
 - All the awesome [developers](http://awesome.naquadah.org/community/).
 
-- Luke Boham, whose GitHub repositories are state-of-the-art for any awesome enthusiast. KDEsome is entirely based on his awesome [Powerarrow Darker](https://github.com/copycat-killer/awesome-copycats).
+- Luke Boham (@copycat-killer), whose GitHub repositories are state-of-the-art for any awesome enthusiast. KDEsome is entirely based on his awesome [Powerarrow Darker](https://github.com/copycat-killer/awesome-copycats).
+
+- Alessandro (@alecive at DeviantArt), from whom I took nm-applet icons borrowed from his stunning [kAwOken](http://alecive.deviantart.com/art/kAwOken-244166779) icon pack.
 
 ## Licenses
 
