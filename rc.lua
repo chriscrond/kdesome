@@ -655,6 +655,14 @@ awful.rules.rules = {
                                   width = 683,
                                   height = 748 } } },
 
+    -- Authy: all clients in screen 1, tag 1, set geometry and get focus when opened
+    { rule = { name = "Authy",
+               class = "chromium" },
+      properties = { tag = tags[1][1],
+                     switchtotag = true,
+                     focus = true,
+                     geometry = { x = 1044,
+                                  y = 18} } }
     -- }}
 }
 -- }}}
