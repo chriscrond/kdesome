@@ -596,6 +596,30 @@ awful.rules.rules = {
                                   height = 382 } } },
     -- }
 
+    -- { Pidgin
+    -- All clients in screen 1, tag 3
+    { rule = { class = "Pidgin" },
+      properties = { tag = tags[1][3] } },
+
+    -- Set geometry for main client (contact list)
+    { rule = { class = "Pidgin",
+               role = "buddy_list" },
+      properties = { geometry = { x = 0,
+                                  y = 18,
+                                  width = 300,
+                                  height = 748 } } },
+
+    -- Set geometry and prevent focus steal for secondary client (chat window)
+    { rule = { class = "Pidgin",
+               role = "conversation" },
+      properties = { switchtotag = false,
+                     focus = false,
+                     geometry = { x = 302,
+                                  y = 384,
+                                  width = 660,
+                                  height = 382 } } },
+    -- }
+
     -- { Choqok
     -- All clients in screen 1, tag 3
     { rule = { class = "Choqok" },
