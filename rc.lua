@@ -72,21 +72,10 @@ theme_dir  = config_dir .. "/themes/kdesome"
 modkey     = "Mod4"
 altkey     = "Mod1"
 terminal   = "terminator" or "xterm"
-
--- user defined
 icons       = home .. "/.kde/share/icons"
 wallpapers  = home .. "/Sync/Dropbox/Photos/Desktop/"
-browser     = "firefox"
-pim         = "kontact --geometry 1304x688+30+48"
-im          = "kopete --geometry 300x748+0+18"
-microblog   = "choqok --geometry 400x748+964+18"
-filemanager = "dolphin"
-kdeconf     = "systemsettings"
-aweconf     = "kate --new --name aweconf " .. home .. "/.conkyrc " ..
-              config_dir .. "/compton.conf " .. theme_dir .. "/theme.lua "
-              .. config_dir .. "/rc.lua"
 menutheme   = "sed 's/xdgmenu = {/xdgmenu = { theme = { height = 16, width = 300 },/'"
-menugen     = "xdg_menu --format awesome | " .. menutheme .. " > " .. config_dir .. "/xdg_menu.lua"
+menugen     = "xdg_menu --format awesome | " .. menutheme .. " > " .. home .. "/.awesome.awful.xdgmenu.lua"
 -- }}}
 
 -- {{{ Layouts and Tags
@@ -152,25 +141,6 @@ end)
 
 -- initial start when rc.lua is first run
 wallpaperTimer:start()
--- }}}
-
--- {{{ Menu
--- Submenus
-require("xdg_menu")
-sys_menu = {
-  { "Terminal", terminal, icons .. "/kAwOkenWhite/clear/22x22/apps/terminal.png" },
-  { "Configurar KDE", kdeconf, icons .. "/kAwOkenWhite/clear/22x22/apps/kdeapp.png" },
-  { "Configurar awesome", aweconf, icons .. "/kAwOkenWhite/clear/22x22/apps/window-manager.png" }}
-
--- Main Menu
-mymainmenu = awful.menu.new({ items = {
-  { "Firefox", browser, icons .. "/kAwOkenWhite/clear/22x22/apps/firefox.png" },
-  { "Kontact", pim, icons .. "/kAwOkenWhite/clear/22x22/apps/kontact.png" },
-  { "Kopete", im, icons .. "/kAwOkenWhite/clear/22x22/apps/kopete.png" },
-  { "Choqok", microblog, icons .. "/kAwOkenWhite/clear/22x22/apps/choqok.png" },
-  { "Dolphin", filemanager, icons .. "/kAwOkenWhite/clear/22x22/apps/file-manager.png" },
-  { "Aplicativos", xdgmenu, icons .. "/kAwOkenWhite/clear/22x22/places/folder-script.png" },
-  { "Sistema", sys_menu, icons .. "/kAwOkenWhite/clear/22x22/start-here/start-here-slackware1.png" }}})
 -- }}}
 
 -- {{{ Wibox
@@ -326,11 +296,8 @@ end
 -- }}}
 
 -- {{{ Mouse bindings
--- Root window
-root.buttons(awful.util.table.join(
-    awful.button({ }, 3, function () mymainmenu:toggle() end)
-    )
-)
+-- Load right-click menu
+require("local.menu")
 
 -- Clients
 clientbuttons = awful.util.table.join(
@@ -527,168 +494,8 @@ clientkeys = awful.util.table.join(
 root.keys(globalkeys)
 -- }}}
 
--- {{{ Rules
-awful.rules.rules = {
-    -- All clients will match this rule
-    { rule = { },
-      properties = { border_width = beautiful.border_width,
-                     border_color = beautiful.border_normal,
-                     focus = awful.client.focus.filter,
-                     keys = clientkeys,
-                     maximized_vertical   = false,
-                     maximized_horizontal = false,
-                     buttons = clientbuttons,
-                     size_hints_honor = false } },
-
-    -- Match all new clients, notify name and class (for debug purposes only)
-    --{ rule = { },
-    --  properties = { },
-    --  callback = function(c)
-    --                 naughty.notify({title="New Client Debug", text="Name: ".. c.name.."\nClass: ".. c.class})
-    --             end },
-
-    -- {{ Application rules
-    -- Firefox: all clients in screen 1, tag 1
-    { rule = { class = "Firefox" },
-      properties = { tag = tags[1][1] } },
-
-    -- { Kontact
-    -- All clients in screen 1, tag 2
-    { rule = { class = "Kontact" },
-      properties = { tag = tags[1][2] } },
-
-    -- Set geometry for main client
-    { rule = { class = "Kontact",
-               role = "MainWindow#1" },
-      properties = { geometry = { x = 30,
-                                  y = 48,
-                                  width = 1304,
-                                  height = 688 } } },
-
-    -- Focus mail composer, get focus when opened
-    { rule = { class = "Kontact",
-               role = "kmail-composer#1" },
-      properties = { switchtotag = true,
-                     focus = true } },
-    -- }
-
-    -- { Kopete
-    -- All clients in screen 1, tag 3
-    { rule = { class = "Kopete" },
-      properties = { tag = tags[1][3] } },
-
-    -- Set geometry for main client (contact list)
-    { rule = { class = "Kopete",
-               role = "MainWindow#1" },
-      properties = { geometry = { x = 0,
-                                  y = 18,
-                                  width = 300,
-                                  height = 748 } } },
-
-    -- Set geometry and prevent focus steal for secondary client (chat window)
-    { rule = { class = "Kopete",
-               role = "MainWindow#2" },
-      properties = { switchtotag = false,
-                     focus = false,
-                     geometry = { x = 302,
-                                  y = 384,
-                                  width = 660,
-                                  height = 382 } } },
-    -- }
-
-    -- { Pidgin
-    -- All clients in screen 1, tag 3
-    { rule = { class = "Pidgin" },
-      properties = { tag = tags[1][3] } },
-
-    -- Set geometry for main client (contact list)
-    { rule = { class = "Pidgin",
-               role = "buddy_list" },
-      properties = { geometry = { x = 0,
-                                  y = 18,
-                                  width = 300,
-                                  height = 748 } } },
-
-    -- Set geometry and prevent focus steal for secondary client (chat window)
-    { rule = { class = "Pidgin",
-               role = "conversation" },
-      properties = { switchtotag = false,
-                     focus = false,
-                     geometry = { x = 302,
-                                  y = 384,
-                                  width = 660,
-                                  height = 382 } } },
-    -- }
-
-    -- { Choqok
-    -- All clients in screen 1, tag 3
-    { rule = { class = "Choqok" },
-      properties = { tag = tags[1][3] } },
-
-    -- Set geometry for main client
-    { rule = { class = "Choqok",
-               role = "MainWindow#1" },
-      properties = { geometry = { x = 964,
-                                  y = 18,
-                                  width = 400,
-                                  height = 748 } } },
-    -- }
-
-    -- Conky: as widget in screen 1, tag 6 and set geometry
-    { rule = { class = "Conky" },
-      properties = { tag = tags[1][6],
-                     switchtotag = true,
-                     floating = true,
-                     ontop = false,
-                     skip_taskbar = true,
-                     geometry = { x = 0,
-                                  y = 18,
-                                  height = 750 } } },
-
-    -- { System Config
-    -- KDE System Settings: all clients in screen 1, tag 6, set geometry and get focus when opened
-    { rule = { class = "Systemsettings",
-               role = "MainWindow#1" },
-      properties = { tag = tags[1][6],
-                     switchtotag = true,
-                     focus = true,
-                     geometry = { x = 264,
-                                  y = 18,
-                                  width = 1100,
-                                  height = 748 } } },
-
-    -- Kate instance for awesome config: all clients in screen 1, tag 6, set geometry and get focus when opened
-    { rule = { class = "Kate",
-               instance = "aweconf",
-               role = "__KateMainWindow#1" },
-      properties = { tag = tags[1][6],
-                     switchtotag = true,
-                     focus = true,
-                     geometry = { x = 264,
-                                  y = 18,
-                                  width = 1100,
-                                  height = 748 } } },
-    -- }
-
-    -- Kate regular instances: set geometry
-    { rule = { class = "Kate",
-               instance = "kate",
-               role  = "__KateMainWindow#1" },
-      properties = { focus = true,
-                     geometry = { y = 18,
-                                  width = 683,
-                                  height = 748 } } },
-
-    -- Authy: all clients in screen 1, tag 1, set geometry and get focus when opened
-    { rule = { name = "Authy",
-               class = "chromium" },
-      properties = { tag = tags[1][1],
-                     switchtotag = true,
-                     focus = true,
-                     geometry = { x = 1044,
-                                  y = 18} } }
-    -- }}
-}
+-- {{{ Load rules
+require("local.rules")
 -- }}}
 
 -- {{{ Signals
