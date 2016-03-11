@@ -75,7 +75,7 @@ terminal   = "terminator" or "xterm"
 icons       = home .. "/.kde/share/icons"
 wallpapers  = home .. "/Sync/Dropbox/Photos/Desktop/"
 menutheme   = "sed 's/xdgmenu = {/xdgmenu = { theme = { height = 16, width = 300 },/'"
-menugen     = "xdg_menu --format awesome | " .. menutheme .. " > " .. home .. "/.awesome.awful.xdgmenu.lua"
+menugen     = "xdg_menu --format awesome | " .. menutheme .. " > " .. config_dir .. "/xdgmenu.lua"
 -- }}}
 
 -- {{{ Layouts and Tags
