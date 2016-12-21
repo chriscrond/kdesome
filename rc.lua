@@ -73,7 +73,7 @@ modkey     = "Mod4"
 altkey     = "Mod1"
 terminal   = "terminator" or "xterm"
 icons       = home .. "/.kde/share/icons"
-wallpapers  = home .. "/Sync/Dropbox/Photos/Desktop/"
+wallpapers  = home .. "/Sync/Dropbox/Photos/Desktop"
 menutheme   = "sed 's/xdgmenu = {/xdgmenu = { theme = { height = 16, width = 300 },/'"
 menugen     = "xdg_menu --format awesome | " .. menutheme .. " > " .. config_dir .. "/xdgmenu.lua"
 -- }}}
@@ -109,38 +109,44 @@ alttab.settings.client_opacity = false
 -- }}}
 
 -- {{{ Random Wallpapers
--- Get the list of files from a directory. Must be all images or folders and non-empty
-function scanDir(directory)
-    local i, fileList, popen = 0, {}, io.popen
-    for filename in popen([[find "]] ..directory.. [[" -type f]]):lines() do
+-- Function to get a list of JPEG and PNG images from a directory.
+function scanImg(directory)
+    local i, imgList, popen = 0, {}, io.popen
+    local popen = popen([[find "]] ..directory.. [[" -type f -name '*.jpg' -o -name '*.png' -maxdepth 1]])
+    for filename in popen:lines() do
         i = i + 1
-        fileList[i] = filename
+        imgList[i] = filename
     end
-    return fileList
+    return imgList
 end
-wallpaperList = scanDir(wallpapers)
+-- Get the list of images.
+wallpaperList = scanImg(wallpapers)
 
--- Apply a random wallpaper on startup
-for s = 1, screen.count() do
-    gears.wallpaper.maximized(wallpaperList[math.random(1, #wallpaperList)], s, true)
-end
-
--- Apply a random wallpaper every changeTime seconds
-changeTime = 3600
-wallpaperTimer = timer { timeout = changeTime }
-wallpaperTimer:connect_signal("timeout", function()
+-- Proceed only if there is at least one image in wallpaperList.
+-- There's no default wallpaper tough (which means a pure black background).
+if wallpaperList[1] then
+    -- Apply a random wallpaper on startup
     for s = 1, screen.count() do
         gears.wallpaper.maximized(wallpaperList[math.random(1, #wallpaperList)], s, true)
     end
-    -- stop the timer (we don't need multiple instances running at the same time)
-    wallpaperTimer:stop()
-    -- restart the timer
-    wallpaperTimer.timeout = changeTime
-    wallpaperTimer:start()
-end)
 
--- initial start when rc.lua is first run
-wallpaperTimer:start()
+    -- Apply a random wallpaper every changeTime seconds
+    changeTime = 3600
+    wallpaperTimer = timer { timeout = changeTime }
+    wallpaperTimer:connect_signal("timeout", function()
+        for s = 1, screen.count() do
+            gears.wallpaper.maximized(wallpaperList[math.random(1, #wallpaperList)], s, true)
+        end
+        -- stop the timer (we don't need multiple instances running at the same time)
+        wallpaperTimer:stop()
+        -- restart the timer
+        wallpaperTimer.timeout = changeTime
+        wallpaperTimer:start()
+    end)
+
+    -- initial start when rc.lua is first run
+    wallpaperTimer:start()
+end
 -- }}}
 
 -- {{{ Wibox
