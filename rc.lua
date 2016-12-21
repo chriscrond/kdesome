@@ -112,7 +112,7 @@ alttab.settings.client_opacity = false
 -- Function to get a list of JPEG and PNG images from a directory.
 function scanImg(directory)
     local i, imgList, popen = 0, {}, io.popen
-    local popen = popen([[find "]] ..directory.. [[" -type f -name '*.jpg' -o -name '*.png' -maxdepth 1]])
+    local popen = popen("find " .. directory .. " -type f -name '*.jpg' -o -name '*.png' -maxdepth 1")
     for filename in popen:lines() do
         i = i + 1
         imgList[i] = filename
